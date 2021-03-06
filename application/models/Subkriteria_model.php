@@ -44,8 +44,9 @@ class Subkriteria_model extends CI_Model
         $this->db->update('subkriteria');
     }
 
-    public function hapusDataSubkriteria($id_subkriteria)
+    public function hapusDataSubkriteria()
     {
+        $id_subkriteria =  $this->input->post('id_subkriteria', true);
         $this->db->delete('subkriteria', ['id_subkriteria' => $id_subkriteria]);
     }
 }

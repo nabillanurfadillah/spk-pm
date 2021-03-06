@@ -38,7 +38,28 @@
                                 <td><?= $sk['nilai_subkriteria']; ?></td>
                                 <td>
                                     <a href="<?= base_url() ?>spk/editsubkriteria/<?= $sk['id_subkriteria']; ?>" class="badge badge-success">edit</a>
-                                    <a href="<?= base_url() ?>spk/hapussubkriteria/<?= $sk['id_subkriteria']; ?>" class="badge badge-danger tombol-hapus-subkriteria">delete</a>
+                                    <a href="" class="badge badge-danger" data-toggle="modal" data-target="#hapusSubkriteriaModal<?= $sk['id_subkriteria']; ?>">delete</a>
+
+                                    <div class="modal fade" id="hapusSubkriteriaModal<?= $sk['id_subkriteria']; ?>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+
+                                        <div class="modal-dialog" role="document">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title" id="exampleModalLabel">Hapus Sub Kriteria</h5>
+                                                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                                                        <span aria-hidden="true">×</span>
+                                                    </button>
+                                                </div>
+                                                <form action="<?= base_url('spk/hapussubkriteria'); ?>" method="post">
+                                                    <input type="hidden" name="id_subkriteria" value="<?= $sk['id_subkriteria'] ?>">
+                                                    <div class="modal-body">Apakah ingin menghapus <?= $sk['nama_subkriteria']; ?> ?</div>
+                                                    <div class="modal-footer">
+                                                        <button class="btn btn-secondary" type="button" data-dismiss="modal">Batal</button>
+                                                        <button class="btn btn-primary">Hapus</button>
+                                                    </div>
+                                                </form>
+                                            </div>
+                                        </div>
                                 </td>
                             </tr>
                             <?php $i++; ?>

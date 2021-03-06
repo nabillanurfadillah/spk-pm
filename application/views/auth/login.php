@@ -12,7 +12,8 @@
                         <div class="col-lg">
                             <div class="p-5">
                                 <div class="text-center">
-                                    <h1 class="h4 text-gray-900 mb-4">SPK Profile Matching</h1>
+                                    <h1 class="h4 text-gray-900 mb-1">Sistem Pendukung Keputusan Pemberian Bonus Karyawan Tupperware Purwokerto</h1><br>
+                                    <h1 class="h5 text-gray-700 mb-1">Login</h1><br>
                                 </div>
 
                                 <?= $this->session->flashdata('message'); ?>
@@ -31,13 +32,13 @@
                                         Login
                                     </button>
                                 </form>
-                                <hr>
+                                <!-- <hr>
                                 <div class="text-center">
                                     <a class="small" href="<?= base_url('auth/forgotpassword'); ?>">Forgot Password?</a>
                                 </div>
                                 <div class="text-center">
                                     <a class="small" href="<?= base_url('auth/registration'); ?>">Create an Account!</a>
-                                </div>
+                                </div> -->
                             </div>
                         </div>
                     </div>

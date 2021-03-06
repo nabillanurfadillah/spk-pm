@@ -32,8 +32,9 @@ class Kriteria_model extends CI_Model
         $this->db->update('kriteria');
     }
 
-    public function hapusDataKriteria($id_kriteria)
+    public function hapusDataKriteria()
     {
+        $id_kriteria =  $this->input->post('id_kriteria', true);
         $this->db->delete('kriteria', ['id_kriteria' => $id_kriteria]);
     }
   }

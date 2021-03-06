@@ -9,10 +9,11 @@ class Spk extends CI_Controller
         is_logged_in();
         $this->load->model('Kriteria_model');
         $this->load->model('Subkriteria_model');
+        $this->load->model('Karyawan_model');
     }
     public function kriteria()
     {
-        $data['title'] = 'Data Kriteria';
+        $data['title'] = 'Kriteria';
         $data['user'] = $this->db->get_where('user', ['email' =>
         $this->session->userdata('email')])->row_array();
 
@@ -27,7 +28,7 @@ class Spk extends CI_Controller
 
     public function tambahkriteria()
     {
-        $data['title'] = 'Tambah Kriteria';
+        $data['title'] = 'Kriteria';
         $data['user'] = $this->db->get_where('user', ['email' =>
         $this->session->userdata('email')])->row_array();
 
@@ -51,7 +52,7 @@ class Spk extends CI_Controller
 
     public function editkriteria($id_kriteria)
     {
-        $data['title'] = 'Ubah Data Kriteria';
+        $data['title'] = 'Kriteria';
         $data['user'] = $this->db->get_where('user', ['email' =>
         $this->session->userdata('email')])->row_array();
 
@@ -76,10 +77,9 @@ class Spk extends CI_Controller
         }
     }
 
-    public function hapuskriteria($id_kriteria)
+    public function hapusKriteria()
     {
-        $kriteria = $this->Kriteria_model->getKriteriaById($id_kriteria);
-        $this->Kriteria_model->hapusDataKriteria($id_kriteria, $kriteria);
+        $this->Kriteria_model->hapusDataKriteria();
         $this->session->set_flashdata('message', '<div class="alert
         alert-success" role="alert"> Data berhasil dihapus!</div>');
         redirect('spk/kriteria');
@@ -153,13 +153,85 @@ class Spk extends CI_Controller
         }
     }
 
-    public function hapussubkriteria($id_subkriteria)
+    public function hapussubkriteria()
     {
-        $subkriteria = $this->Subkriteria_model->getSubkriteriaById($id_subkriteria);
-        $this->Subkriteria_model->hapusDataSubkriteria($id_subkriteria, $subkriteria);
-        $this->session->set_flashdata('message', 'Dihapus!');
+      
+        $this->Subkriteria_model->hapusDataSubkriteria();
         $this->session->set_flashdata('message', '<div class="alert
         alert-success" role="alert"> Data berhasil dihapus!</div>');
         redirect('spk/subkriteria');
     }
+
+    public function karyawan()
+    {
+        $data['title'] = 'Karyawan';
+        $data['user'] = $this->db->get_where('user', ['email' =>
+        $this->session->userdata('email')])->row_array();
+
+        $data['karyawan'] = $this->Karyawan_model->getAllKaryawan();
+
+        $this->load->view('templates/header', $data);
+        $this->load->view('templates/sidebar', $data);
+        $this->load->view('templates/topbar', $data);
+        $this->load->view('spk/karyawan/karyawan', $data);
+        $this->load->view('templates/footer');
+    }
+
+    public function tambahkaryawan()
+    {
+        $data['title'] = 'Karyawan';
+        $data['user'] = $this->db->get_where('user', ['email' =>
+        $this->session->userdata('email')])->row_array();
+
+        $this->form_validation->set_rules('nama_karyawan', 'Nama Karyawan', 'required|trim');
+
+        if ($this->form_validation->run() == false) {
+            $this->load->view('templates/header', $data);
+            $this->load->view('templates/sidebar', $data);
+            $this->load->view('templates/topbar', $data);
+            $this->load->view('spk/karyawan/tambahkaryawan', $data);
+            $this->load->view('templates/footer');
+        } else {
+
+            $this->Karyawan_model->tambahDataKaryawan();
+            $this->session->set_flashdata('message', '<div class="alert
+            alert-success" role="alert"> Data berhasil ditambahkan!</div>');
+            redirect('spk/karyawan');
+        }
+    }
+
+    public function editkaryawan($id_karyawan)
+    {
+        $data['title'] = 'Karyawan';
+        $data['user'] = $this->db->get_where('user', ['email' =>
+        $this->session->userdata('email')])->row_array();
+
+        $data['karyawan'] = $this->Karyawan_model->getKaryawanById($id_karyawan);
+        $karyawan = $this->Karyawan_model->getKaryawanById($id_karyawan);
+
+        $this->form_validation->set_rules('nama_karyawan', 'Nama Karyawan', 'required|trim');
+
+        if ($this->form_validation->run() == false) {
+            $this->load->view('templates/header', $data);
+            $this->load->view('templates/sidebar', $data);
+            $this->load->view('templates/topbar', $data);
+            $this->load->view('spk/karyawan/editkaryawan', $data);
+            $this->load->view('templates/footer');
+        } else {
+            $this->Karyawan_model->ubahDataKaryawan($karyawan, $id_karyawan);
+
+            $this->session->set_flashdata('message', '<div class="alert
+            alert-success" role="alert"> Data berhasil diubah!</div>');
+            redirect('spk/karyawan');
+        }
+    }
+
+    public function hapuskaryawan()
+    {
+        $this->Karyawan_model->hapusDataKaryawan();
+        $this->session->set_flashdata('message', '<div class="alert
+        alert-success" role="alert"> Data berhasil dihapus!</div>');
+        redirect('spk/karyawan');
+    }
+
   }

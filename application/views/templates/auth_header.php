@@ -17,7 +17,8 @@
 
     <!-- Custom styles for this template-->
     <link href="<?= base_url('assets/'); ?>css/sb-admin-2.min.css" rel="stylesheet">
+    <link href="<?= base_url('assets/'); ?>css/style.css" rel="stylesheet">
 
 </head>
 
-<body class="bg-gradient-secondary">
+<body class="bg-gradient-secondary bg">

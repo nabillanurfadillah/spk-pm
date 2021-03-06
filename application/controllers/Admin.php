@@ -7,15 +7,19 @@ class Admin extends CI_Controller
     {
         parent::__construct();
         is_logged_in();
+        $this->load->model('Role_model');
+ 
     }
-
-
 
     public function index()
     {
         $data['title'] = 'Dashboard';
         $data['user'] = $this->db->get_where('user', ['email' =>
         $this->session->userdata('email')])->row_array();
+
+        $data['kriteria'] = $this->db->count_all_results('kriteria');
+        $data['subkriteria'] = $this->db->count_all_results('subkriteria');
+        $data['karyawan'] = $this->db->count_all_results('karyawan');
 
         $this->load->view('templates/header', $data);
         $this->load->view('templates/sidebar', $data);
@@ -29,14 +33,25 @@ class Admin extends CI_Controller
         $data['title'] = 'Role';
         $data['user'] = $this->db->get_where('user', ['email' =>
         $this->session->userdata('email')])->row_array();
-
+        $data['namarole']  = $this->db->get_where('user_role', ['id' =>
+        $this->session->userdata('id')])->row_array();
         $data['role'] = $this->db->get('user_role')->result_array();
-
-        $this->load->view('templates/header', $data);
-        $this->load->view('templates/sidebar', $data);
-        $this->load->view('templates/topbar', $data);
-        $this->load->view('admin/role', $data);
-        $this->load->view('templates/footer');
+        $data['namarole']   = $this->db->get_where('user_role', ['id' =>
+        $this->session->userdata('id')])->row_array();
+        $this->form_validation->set_rules('role', 'Role', 'required|trim');
+        if ($this->form_validation->run() == false) {
+            $this->load->view('templates/header', $data);
+            $this->load->view('templates/sidebar', $data);
+            $this->load->view('templates/topbar', $data);
+            $this->load->view('admin/role', $data);
+            $this->load->view('templates/footer');
+        } else {
+            $this->db->insert('user_role', ['role' => $this->input->post('role')]);
+            $this->session->set_flashdata('message', '<div class="alert
+      alert-success" role="alert"> New role added!</div>');
+            redirect('admin/role');
+        }
+    
     }
 
 
@@ -78,5 +93,34 @@ class Admin extends CI_Controller
         }
         $this->session->set_flashdata('message', '<div class="alert
         alert-success" role="alert">Access Changed!</div>');
+    }
+
+    public function editrole()
+    {
+        $data['title'] = 'Role';
+        $data['user'] = $this->db->get_where('user', ['email' =>
+        $this->session->userdata('email')])->row_array();
+        $this->form_validation->set_rules('roleedit', 'Role', 'required|trim');
+
+        if ($this->form_validation->run() == false) {
+            $this->load->view('templates/header', $data);
+            $this->load->view('templates/sidebar', $data);
+            $this->load->view('templates/topbar', $data);
+            $this->load->view('admin/role', $data);
+            $this->load->view('templates/footer');
+        } else {
+            $this->Role_model->ubahDataRole();
+            $this->session->set_flashdata('message', '<div class="alert
+            alert-success" role="alert"> Role Berhasil Diubah!</div>');
+            redirect('admin/role');
+        }
+    }
+    public function hapusrole()
+    {
+
+        $this->Role_model->hapusDataRole();
+        $this->session->set_flashdata('message', '<div class="alert
+        alert-success" role="alert"> Role Berhasil Dihapus!</div>');
+        redirect('admin/role');
     }
 }
