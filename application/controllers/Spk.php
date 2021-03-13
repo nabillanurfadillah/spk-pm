@@ -10,6 +10,8 @@ class Spk extends CI_Controller
         $this->load->model('Kriteria_model');
         $this->load->model('Subkriteria_model');
         $this->load->model('Karyawan_model');
+        $this->load->model('NilaiGap_model');
+        $this->load->model('Penilaian_model');
     }
     public function kriteria()
     {
@@ -90,9 +92,9 @@ class Spk extends CI_Controller
         $data['title'] = 'Sub Kriteria';
         $data['user'] = $this->db->get_where('user', ['email' =>
         $this->session->userdata('email')])->row_array();
-       
+
         $data['subkriteria'] = $this->Subkriteria_model->getAllSubkriteria();
-       
+
         $this->load->view('templates/header', $data);
         $this->load->view('templates/sidebar', $data);
         $this->load->view('templates/topbar', $data);
@@ -105,7 +107,7 @@ class Spk extends CI_Controller
         $data['title'] = 'Sub Kriteria';
         $data['user'] = $this->db->get_where('user', ['email' =>
         $this->session->userdata('email')])->row_array();
-       
+
         $this->form_validation->set_rules('id_kriteria', 'Kriteria', 'required');
         $this->form_validation->set_rules('nama_subkriteria', 'Nama Subkriteria', 'required|trim');
         $this->form_validation->set_rules('nilai_subkriteria', 'Nilai Subkriteria', 'required|trim');
@@ -130,7 +132,7 @@ class Spk extends CI_Controller
         $data['title'] = 'Sub Kriteria';
         $data['user'] = $this->db->get_where('user', ['email' =>
         $this->session->userdata('email')])->row_array();
-       
+
         $subkriteria = $this->Subkriteria_model->getSubkriteriaById($id_subkriteria);
         $data['subkriteria'] = $this->Subkriteria_model->getSubkriteriaById($id_subkriteria);
         $data['kriteria'] = $this->Kriteria_model->getAllKriteria();
@@ -155,7 +157,7 @@ class Spk extends CI_Controller
 
     public function hapussubkriteria()
     {
-      
+
         $this->Subkriteria_model->hapusDataSubkriteria();
         $this->session->set_flashdata('message', '<div class="alert
         alert-success" role="alert"> Data berhasil dihapus!</div>');
@@ -234,4 +236,90 @@ class Spk extends CI_Controller
         redirect('spk/karyawan');
     }
 
-  }
+    public function hapuskaryawannilai()
+    {
+        $this->Karyawan_model->hapusDataKaryawanNilai();
+        $this->session->set_flashdata('message', '<div class="alert
+        alert-success" role="alert"> Data berhasil dihapus!</div>');
+        redirect('spk/penilaian');
+    }
+
+    public function nilaigap()
+    {
+        $data['title'] = 'Nilai GAP';
+        $data['user'] = $this->db->get_where('user', ['email' =>
+        $this->session->userdata('email')])->row_array();
+
+        $data['nilaigap'] = $this->NilaiGap_model->getAllNilaiGap();
+
+        $this->load->view('templates/header', $data);
+        $this->load->view('templates/sidebar', $data);
+        $this->load->view('templates/topbar', $data);
+        $this->load->view('spk/nilaigap/nilaigap', $data);
+        $this->load->view('templates/footer');
+    }
+
+    public function penilaian()
+    {
+        $data['title'] = 'Penilaian';
+        $data['user'] = $this->db->get_where('user', ['email' =>
+        $this->session->userdata('email')])->row_array();
+        $data['penilaian'] = $this->Penilaian_model->getAllPenilaian();
+        $data['hitung'] = $this->Penilaian_model->getAllHitung();
+        $data['nilaiakhir'] = $this->Penilaian_model->getAllNilaiAkhir();
+        $data['nilai'] = [
+            ["id_nilai" => 1, "nama_nilai" => "1-Sangat Kurang"],
+            ["id_nilai" => 2, "nama_nilai" => "2-Kurang"],
+            ["id_nilai" => 3, "nama_nilai" => "3-Cukup"],
+            ["id_nilai" => 4, "nama_nilai" => "4-Baik"],
+            ["id_nilai" => 5, "nama_nilai" => "5-Sangat Baik"]
+        ];
+        // echo '<pre>';
+        // var_dump($data['nilai']);
+        // echo '</pre>';
+        // die;
+        $this->load->view('templates/header', $data);
+        $this->load->view('templates/sidebar', $data);
+        $this->load->view('templates/topbar', $data);
+        $this->load->view('spk/penilaian/penilaian', $data);
+        $this->load->view('templates/footer');
+    }
+
+    public function tambahpenilaian()
+    {
+        $data['title'] = 'Penilaian';
+        $data['user'] = $this->db->get_where('user', ['email' =>
+        $this->session->userdata('email')])->row_array();
+
+        $this->form_validation->set_rules('id_karyawan', 'Karyawan', 'required');
+
+        $data['penilaian'] = $this->db->get('penilaian')->result_array();
+        $data['karyawan'] = $this->Karyawan_model->getAllKaryawanAdded();
+        $data['kriteria'] = $this->Kriteria_model->getAllKriteria();
+        $data['subkriteria'] = $this->Subkriteria_model->getAllSubkriteria();
+        if ($this->form_validation->run() == false) {
+            $this->load->view('templates/header', $data);
+            $this->load->view('templates/sidebar', $data);
+            $this->load->view('templates/topbar', $data);
+            $this->load->view('spk/penilaian/tambahpenilaian', $data);
+            $this->load->view('templates/footer');
+        } else {
+
+            $this->Penilaian_model->tambahDataPenilaian();
+            $this->session->set_flashdata('message', '<div class="alert
+            alert-success" role="alert"> Data berhasil ditambahkan!</div>');
+            redirect('spk/penilaian');
+        }
+    }
+
+    public function editpenilaian()
+    {
+        $data['user'] = $this->db->get_where('user', ['email' =>
+        $this->session->userdata('email')])->row_array();
+
+        $this->Penilaian_model->editDataPenilaian();
+        $this->session->set_flashdata('message', '<div class="alert
+            alert-success" role="alert"> Data berhasil diubah!</div>');
+        redirect('spk/penilaian');
+    }
+}

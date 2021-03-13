@@ -8,7 +8,6 @@ class Admin extends CI_Controller
         parent::__construct();
         is_logged_in();
         $this->load->model('Role_model');
- 
     }
 
     public function index()
@@ -20,6 +19,7 @@ class Admin extends CI_Controller
         $data['kriteria'] = $this->db->count_all_results('kriteria');
         $data['subkriteria'] = $this->db->count_all_results('subkriteria');
         $data['karyawan'] = $this->db->count_all_results('karyawan');
+        $data['rangking'] = $this->db->count_all_results('rangking');
 
         $this->load->view('templates/header', $data);
         $this->load->view('templates/sidebar', $data);
@@ -51,13 +51,12 @@ class Admin extends CI_Controller
       alert-success" role="alert"> New role added!</div>');
             redirect('admin/role');
         }
-    
     }
 
 
     public function roleAccess($role_id)
     {
-        $data['title'] = 'Role Access';
+        $data['title'] = 'Role';
         $data['user'] = $this->db->get_where('user', ['email' =>
         $this->session->userdata('email')])->row_array();
 

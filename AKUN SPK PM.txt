@@ -1,0 +1,16 @@
+AKUN SPK PM
+
+ADMIN
+
+email : admin@admin.com
+pass  : @admin123
+
+
+email : admin2@admin.com
+pass  : @admin123
+
+DIREKTUR
+
+email : direktur@direktur.com
+pass  : @direktur123
+

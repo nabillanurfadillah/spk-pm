@@ -40,8 +40,8 @@
                                 FROM user_sub_menu JOIN user_menu
                                   ON user_sub_menu.menu_id = user_menu.id
                                WHERE user_sub_menu.menu_id = $menuId 
-                                 AND user_sub_menu.is_active = 1
-                                ";
+                               AND `user_sub_menu`.`is_active` = 1 ORDER BY `user_sub_menu`.`urutan` ASC";
+                                
             $subMenu = $this->db->query($querySubMenu)->result_array();
             ?>
 
