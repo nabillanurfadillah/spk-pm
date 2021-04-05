@@ -32,7 +32,9 @@
                                         <th scope="col">Kriteria</th>
                                         <th scope="col">Sub Kriteria</th>
                                         <th scope="col">Nilai</th>
-                                        <th scope="col">Selisih</th>
+                                        <th class="text-center" scope="col">Selisih<br>
+                                            <p style="font-size:10px">(Nilai-Nilai Subkriteria)</p>
+                                        </th>
                                         <th scope="col">Nilai Gap</th>
                                         <th scope="col">Action</th>
                                     </tr>
@@ -46,7 +48,7 @@
                                             <td><?= $p['nama_kriteria']; ?></td>
                                             <td><?= $p['nama_subkriteria']; ?></td>
                                             <td><?= $p['nilai']; ?></td>
-                                            <td><?= $p['selisih']; ?></td>
+                                            <td><?= $p['nilai']; ?> - 3 = <?= $p['selisih']; ?></td>
                                             <td><?= $p['nilai_gap']; ?></td>
                                             <td>
                                                 <div class="text-center">
@@ -136,7 +138,9 @@
                                                 <th scope="col">Karyawan</th>
                                                 <th scope="col">Kriteria</th>
                                                 <th scope="col">Fakor</th>
-                                                <th scope="col">Rata - Rata</th>
+                                                <th class="text-center" scope="col">Rata - Rata <br>
+                                                    <p style="font-size:10px">(Rata2 Nilai GAP per Faktor)</p>
+                                                </th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -147,7 +151,7 @@
                                                     <td><?= $h['nama_karyawan']; ?></td>
                                                     <td><?= $h['nama_kriteria']; ?></td>
                                                     <td><?= $h['faktor']; ?></td>
-                                                    <td><?= $h['rata_rata']; ?></td>
+                                                    <td>1+3/2 = <?= $h['rata_rata']; ?></td>
                                                 </tr>
                                                 <?php $i++; ?>
                                             <?php endforeach; ?>
@@ -176,8 +180,12 @@
                                                 <th scope="col">No</th>
                                                 <th scope="col">Karyawan</th>
                                                 <th scope="col">Kriteria</th>
-                                                <th scope="col">Nilai Total</th>
-                                                <th scope="col">Nilai Akhir</th>
+                                                <th class="text-center" scope="col">Nilai Total <br>
+                                                    <p style="font-size:10px">(Rata2 Core x 60%) + (Rata2 Secondary x 40%)</p>
+                                                </th>
+                                                <th class="text-center" scope="col">Nilai Akhir <br>
+                                                    <p style="font-size:10px">(Nilai Total x Persentase Kriteria)</p>
+                                                </th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -187,8 +195,8 @@
                                                     <th class="text-center" scope="row"><?= $i ?></th>
                                                     <td><?= $na['nama_karyawan']; ?></td>
                                                     <td><?= $na['nama_kriteria']; ?></td>
-                                                    <td><?= $na['nilai_total']; ?></td>
-                                                    <td><?= $na['nilai_akhir']; ?></td>
+                                                    <td>(2x60%) + (4x40%) = <?= $na['nilai_total']; ?></td>
+                                                    <td>2.8 x 30% = <?= $na['nilai_akhir']; ?></td>
                                                 </tr>
                                                 <?php $i++; ?>
                                             <?php endforeach; ?>
@@ -218,7 +226,9 @@
                                             <tr>
                                                 <th scope="col">No</th>
                                                 <th scope="col">Nama Karyawan</th>
-                                                <th scope="col">Rangking</th>
+                                                <th class="text-center" scope="col">Rangking <br>
+                                                    <p style="font-size:10px">(Penjumlahan dari Nilai Akhir)</p>
+                                                </th>
                                                 <th scope="col">Action</th>
                                             </tr>
                                         </thead>
@@ -231,7 +241,7 @@
                                                 <tr>
                                                     <th class="text-center" scope="row"><?= $i ?></th>
                                                     <td><?= $k['nama_karyawan']; ?></td>
-                                                    <td><?= round($k['nilai_rangking'], 2); ?></td>
+                                                    <td>(4.45 + 4.35 + 4.15 + 4.65 + 4.85) = <?= round($k['nilai_rangking'], 2); ?></td>
                                                     <td>
                                                         <div class="text-center">
                                                             <a href="" data-toggle="modal" data-target="#hapusKaryawanModal<?= $k['id_karyawan']; ?>" class="badge badge-danger">delete</a>
