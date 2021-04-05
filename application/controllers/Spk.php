@@ -137,6 +137,7 @@ class Spk extends CI_Controller
         $data['subkriteria'] = $this->Subkriteria_model->getSubkriteriaById($id_subkriteria);
         $data['kriteria'] = $this->Kriteria_model->getAllKriteria();
         $data['faktor'] = ['Core', 'Secondary'];
+        $data['nilai_subkriteria'] = [5, 4, 3, 2, 1];
         $data['subkriteriaall'] = $this->db->get('subkriteria')->result_array();
         $this->form_validation->set_rules('nama_subkriteria', 'Nama Sub Kriteria', 'required|trim');
         $this->form_validation->set_rules('nilai_subkriteria', 'Nilai Sub Kriteria', 'required|trim');

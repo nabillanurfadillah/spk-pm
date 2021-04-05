@@ -53,9 +53,16 @@
                         </div>
                         <div class="form-group row">
                             <label for="nilai_subkriteria" class="col-sm-3 col-form-label">Nilai Subkriteria</label>
-                            <div class="col-sm-7">
-                                <input type="text" class="form-control" id="nilai_subkriteria" name="nilai_subkriteria" value="<?= $subkriteria['nilai_subkriteria']; ?>">
-                                <?= form_error('nilai_subkriteria', ' <small class="text-danger pl-3">', '</small>'); ?>
+                            <div class="col-sm-9">
+                                <select name="faktor" id="faktor" class="form-control col-sm-9">
+                                    <?php foreach ($nilai_subkriteria as $ns) : ?>
+                                        <?php if ($ns == $subkriteria['nilai_subkriteria']) : ?>
+                                            <option value="<?= $ns; ?>" selected><?= $ns; ?></option>
+                                        <?php else : ?>
+                                            <option value="<?= $ns; ?>"><?= $ns; ?></option>
+                                        <?php endif; ?>
+                                    <?php endforeach; ?>
+                                </select>
                             </div>
                         </div>
                         <?php

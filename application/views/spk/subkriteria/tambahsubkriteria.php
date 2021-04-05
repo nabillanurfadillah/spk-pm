@@ -46,9 +46,15 @@
 
                         <div class="form-group row">
                             <label for="nilai_subkriteria" class="col-sm-3 col-form-label">Nilai</label>
-                            <div class="col-sm-7">
-                                <input type="text" class="form-control" id="nilai_subkriteria" name="nilai_subkriteria" placeholder="Masukkan Nilai Subkriteria" value="<?= set_value('nilai_subkriteria'); ?>">
-                                <?= form_error('nilai_subkriteria', ' <small class="text-danger pl-3">', '</small>'); ?>
+                            <div class="col-sm-6">
+                                <select name="nilai_subkriteria" id="nilai_subkriteria" class="form-control col-sm-9" required>
+                                    <option value="">--Pilih Nilai Subkriteria--</option>
+                                    <option value="5">5</option>
+                                    <option value="4">4</option>
+                                    <option value="3">3</option>
+                                    <option value="2">2</option>
+                                    <option value="1">1</option>
+                                </select>
                             </div>
                         </div>
                         <div class="form-group row justify-content-end">
